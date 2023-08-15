@@ -10,7 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_15_084933) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_15_095443) do
+  create_table "leave_requests", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "leave_type_id", null: false
+    t.date "start_date"
+    t.date "end_date"
+    t.string "status"
+    t.text "reason"
+    t.integer "manager_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["leave_type_id"], name: "index_leave_requests_on_leave_type_id"
+    t.index ["manager_id"], name: "index_leave_requests_on_manager_id"
+    t.index ["user_id"], name: "index_leave_requests_on_user_id"
+  end
+
+  create_table "leave_types", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "team_members", force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_team_members_on_team_id"
+    t.index ["user_id"], name: "index_team_members_on_user_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -20,4 +58,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_15_084933) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "leave_requests", "leave_types"
+  add_foreign_key "leave_requests", "managers"
+  add_foreign_key "leave_requests", "users"
+  add_foreign_key "team_members", "teams"
+  add_foreign_key "team_members", "users"
 end
