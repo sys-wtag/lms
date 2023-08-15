@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_15_095443) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_15_114926) do
   create_table "leave_requests", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "leave_type_id", null: false
@@ -18,11 +18,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_15_095443) do
     t.date "end_date"
     t.string "status"
     t.text "reason"
-    t.integer "manager_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["leave_type_id"], name: "index_leave_requests_on_leave_type_id"
-    t.index ["manager_id"], name: "index_leave_requests_on_manager_id"
     t.index ["user_id"], name: "index_leave_requests_on_user_id"
   end
 
@@ -59,7 +57,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_15_095443) do
   end
 
   add_foreign_key "leave_requests", "leave_types"
-  add_foreign_key "leave_requests", "managers"
   add_foreign_key "leave_requests", "users"
   add_foreign_key "team_members", "teams"
   add_foreign_key "team_members", "users"
