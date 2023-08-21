@@ -8,9 +8,15 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to root_path
     else
-      render 'new', status: :unprocessable_entity
+      if User.find_by(email: params[:session][:email])
+        flash.alert = " Invalid credentials"
+        render 'new', status: :unprocessable_entity
+      else
+        flash.alert = "User not found"
+        render 'new', status: :unprocessable_entity
+      end
     end
-  end
+    end
 
   def destroy
     session.clear 

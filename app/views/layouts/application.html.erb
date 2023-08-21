@@ -46,6 +46,11 @@
   <a href="/login">Signup</a>
   <a href="/logout">Log out</a>
 </div>
+<% flash.each do |type,msg|%>
+<div>
+<%=msg%>
+</div>
+<% end %>
     <%= yield %>
   </body>
 </html>
