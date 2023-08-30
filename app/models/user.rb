@@ -7,14 +7,14 @@ class EmailFormatValidator < ActiveModel::EachValidator
 end
 
 class User < ApplicationRecord
-    before_validation :set_defaults
+    after_initialize :set_defaults
     after_validation :set_valid
     
     has_many :leave_requests
     has_many :team_members
     has_many :teams, through: :team_members
     
-    validates :email, uniqueness: true, email_format: true
+    validates :email, presence: true, uniqueness: true, email_format: true
     validates :password, presence: true, length: { minimum: 6,
                message: " must be minimum %{count} charecters"}, on: :create
     has_secure_password
