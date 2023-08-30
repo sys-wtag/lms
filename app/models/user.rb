@@ -7,6 +7,9 @@ class EmailFormatValidator < ActiveModel::EachValidator
 end
 
 class User < ApplicationRecord
+    before_validation :set_defaults
+    after_validation :set_valid
+    
     has_many :leave_requests
     has_many :team_members
     has_many :teams, through: :team_members
@@ -14,6 +17,14 @@ class User < ApplicationRecord
     validates :email, uniqueness: true, email_format: true
     validates :password, presence: true, length: { minimum: 6,
                message: " must be minimum %{count} charecters"}, on: :create
-
     has_secure_password
+
+    private
+    def set_defaults
+      self.name = "first name" if name.blank?
+    end
+
+    def set_valid
+      self.isValid = errors.empty?
+    end
 end

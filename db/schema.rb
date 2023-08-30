@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_15_114926) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_30_050339) do
   create_table "leave_requests", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "leave_type_id", null: false
@@ -54,6 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_15_114926) do
     t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "isValid"
   end
 
   add_foreign_key "leave_requests", "leave_types"
