@@ -1,8 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+
+  describe 'associations' do 
+    it {should have_many(:leave_requests)}
+    it {should have_many(:team_members)}
+    it {should have_many(:teams)}
+  end
+
+  describe 'validations' do 
+    it { should validate_presence_of(:email)}
+    it {should validate_presence_of(:password)}
+    it { should validate_uniqueness_of(:email)}
+    it {should have_secure_password}
+  end
+
   context 'upon creation' do
-    let!(:message)do
+    let(:message)do
     puts 'let is running'
     'message'
     end
@@ -17,9 +31,7 @@ RSpec.describe User, type: :model do
 
     it 'cannot have leave requests' , :specific do
       expect {@user.leave_requests.create!}.to raise_error(ActiveRecord::RecordNotSaved)
-      puts 'hello'
       puts message
-      puts 'hell nah'
     end
 
     it 'creates user successfully when provided valid attributes' , :specific do
